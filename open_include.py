@@ -104,6 +104,7 @@ class OpenInclude(sublime_plugin.TextCommand):
                 subs = path.replace('\\', '/').split('/')
                 subs[-1] = re.sub('("|\')', '', subs[-1]);
                 subs[-1] = extension.get('prefix', '') + subs[-1] + extension.get('extension', '')
+                subs.insert(0, extension.get('path_prefix', ''))
                 path_add.append(os.path.join(*subs))
         return paths + path_add
 
@@ -169,6 +170,8 @@ class OpenInclude(sublime_plugin.TextCommand):
 
             if opened:
                 something_opened = True
+                if s.get('open_one_only'):
+                    break
 
         return something_opened
 
